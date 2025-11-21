@@ -1,19 +1,25 @@
-def getRow(rowIndex):
-    row = [1]
+def jump(nums):
+    n = len(nums)
+    if n <= 1:
+        return 0
 
-    for i in range(1, rowIndex + 1):
-        # Создаем новую строку на основе предыдущей
-        new_row = [1]  # Первый элемент всегда 1
+    jumps = 0
+    current_end = 0
+    farthest = 0
 
-        # Заполняем средние элементы
-        for j in range(1, i):
-            new_row.append(row[j - 1] + row[j])
+    for i in range(n - 1):
+        farthest = max(farthest, i + nums[i])
 
-        new_row.append(1)  # Последний элемент всегда 1
-        row = new_row
+        if i == current_end:
+            jumps += 1
+            current_end = farthest
 
-    return row
+            if current_end >= n - 1:
+                break
+
+    return jumps
 
 
 # Пример использования
-print(getRow(int(input())))
+nums = [4, 4, 1, 1, 2, 5]
+print(f"Минимальное количество прыжков: {jump(nums)}")
